@@ -21,8 +21,6 @@ import { configureStaticPaths } from "./src/utils/index.js";
 import { fileURLToPath } from "url";
 import { testDatabase, setupDatabase } from "./src/models/index.js";
 
-import sessionConfig from "./src/models/index.js";
-
 /**
  * Global Variables
  */
