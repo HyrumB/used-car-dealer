@@ -1,6 +1,7 @@
 import pg from 'pg';
 import fs from 'fs';
-import pgSession from 'connect-pg-simple';
+
+
 
 
 const { Pool } = pg;
@@ -77,28 +78,4 @@ export const testDatabase = async () => {
 };
 
 
-
-// set up session
-const secret = process.env.SECRET;
-
-// const sessionConfig = {
-//     store: new pgSession({
-//         pool: pool,
-//         tableName: 'session'
-//     }),
-//     name: 'SessionID',
-//     secret: secret,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//         maxAge: 1000 * 60 * 60 * 24 * 7,
-//         sameSite: true,
-//         secure: false,        // Set to `true` in production with HTTPS
-//         httpOnly: true,      // Prevents client-side access to the cookie
-
-//     }}
-
-
-// export default{ dbClient, sessionConfig };
-
-export default dbClient;
+export default{ dbClient, pool };
