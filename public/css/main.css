@@ -1,0 +1,129 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+:root {
+  --color-primary: darkslategray;
+  --color-secondary: #3d2a2a;
+  --color-tertiary: #323834;
+  --text-color: white;
+  --text-color-secondary: black;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: var(--color-primary);
+
+  color: var(--text-color);
+
+  main {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2rem;
+
+    text-decoration: none;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-secondary);
+    color: var(--text-color);
+    padding: 1rem;
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        li {
+          margin: 0 1rem;
+          padding: 1.5rem;
+          outline-style: solid;
+          outline-color: var(--color-tertiary);
+
+          :hover {
+            text-decoration: underline;
+            background-color: var(--color-primary);
+          }
+        }
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          vertical-align: middle;
+
+          :hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(250px, 1fr)
+    ); /* Responsive grid */
+    gap: 20px; /* Space between grid items */
+    padding: 20px; /* Padding around the grid */
+
+    .category-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden; /* Ensure image fits within the card */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease; /* Smooth hover effect */
+      display: flex; /*Use flexbox to make the card content stack nicely*/
+      flex-direction: column;
+
+      .category-card:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 200px; /* Fixed height for images, adjust as needed */
+        object-fit: cover; /* Maintain aspect ratio and cover the area */
+      }
+
+      .category-card h3 {
+        padding: 10px 15px;
+        margin: 0;
+        font-size: 1.2em;
+        text-align: center;
+      }
+
+      .category-card p {
+        padding: 0 15px 15px 15px;
+        margin: 0;
+        font-size: 1em;
+        text-align: center;
+        flex-grow: 1; /*push the paragraph to the bottom of the card*/
+      }
+    }
+  }
+
+  footer {
+    background-color: var(--color-secondary);
+    padding: 1rem;
+  }
+}

@@ -2,28 +2,42 @@
  * Imports
  */
 import configNodeEnv from './src/middleware/node-env.js';
-import express from "express";
-import fileUploads from './src/middleware/file-uploads.js';
-import homeRoute from './src/routes/index.js';
-import layouts from './src/middleware/layouts.js';
 import path from "path";
+
+import express from "express";
+
+// Middleware
+import fileUploads from './src/middleware/file-uploads.js';
+import layouts from './src/middleware/layouts.js';
+import homeRoute from './src/routes/index.js';
+
 import { configureStaticPaths } from './src/utils/index.js';
 import { fileURLToPath } from 'url';
-import { testDatabase } from './src/models/index.js';
+import { testDatabase, setupDatabase } from './src/models/index.js';
+
+import sessionConfig from './src/models/index.js';
 
 /**
  * Global Variables
  */
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const mode = process.env.NODE_ENV;
 const port = process.env.PORT;
 
+
+
+
 /**
  * Create and configure the Express server
  */
 const app = express();
+
+// instance the session token
+// app.use(session(sessionConfig))
+
 
 // Configure the application based on environment settings
 app.use(configNodeEnv);
@@ -81,6 +95,8 @@ if (mode.includes('dev')) {
 
 // Start the Express server
 app.listen(port, async () => {
-    await testDatabase();
+    
+    await setupDatabase();
+
     console.log(`Server running on http://127.0.0.1:${port}`);
 });

@@ -2,11 +2,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><%= title %></title>
 <link rel="stylesheet" href="/css/main.css">
+
+<!-- runs the styles in the styles array -->
 <% if (styles && styles.length > 0) { %>
     <% styles.forEach((style) => { %>
         <%- style %>
     <% }); %>
 <% } %>
+
+<!-- runs the scripts in the scripts array -->
 <% if (scripts && scripts.length > 0) { %>
     <% scripts.forEach((script) => { %>
         <%- script %>

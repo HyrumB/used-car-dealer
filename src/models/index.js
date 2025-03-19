@@ -1,5 +1,7 @@
 import pg from 'pg';
 import fs from 'fs';
+import pgSession from 'connect-pg-simple';
+
 
 const { Pool } = pg;
 
@@ -41,6 +43,7 @@ if (process.env.NODE_ENV.toLowerCase().includes('dev')) {
                 console.error('Error in query:', { text });
                 throw error;
             }
+
         }
     };
 } else {
@@ -50,9 +53,9 @@ if (process.env.NODE_ENV.toLowerCase().includes('dev')) {
 
 // Setup function that can be used on server startup
 export const setupDatabase = async () => {
-    console.log('This feature is not yet implemented.');
-    const sql = fs.readFileSync('...', 'utf-8');
-    await dbClient.exec(sql);
+    // console.log('This feature is not yet implemented.');
+    const sql = fs.readFileSync('./src/models/setup.sql', 'utf-8');
+    await dbClient.query(sql);
 };
 
 // Test function that can be used to test the database
@@ -72,5 +75,30 @@ export const testDatabase = async () => {
         console.error('Error fetching tables:', error);
     }
 };
+
+
+
+// set up session
+const secret = process.env.SECRET;
+
+// const sessionConfig = {
+//     store: new pgSession({
+//         pool: pool,
+//         tableName: 'session'
+//     }),
+//     name: 'SessionID',
+//     secret: secret,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         maxAge: 1000 * 60 * 60 * 24 * 7,
+//         sameSite: true,
+//         secure: false,        // Set to `true` in production with HTTPS
+//         httpOnly: true,      // Prevents client-side access to the cookie
+
+//     }}
+
+
+// export default{ dbClient, sessionConfig };
 
 export default dbClient;
