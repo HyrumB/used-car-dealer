@@ -45,9 +45,6 @@ const configureStaticPaths = (app) => {
   app.set("staticPaths", Array.from(registeredPaths));
 };
 
-
-
-
 /**
  * Returns the navigation menu.
  *

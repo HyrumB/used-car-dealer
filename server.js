@@ -6,9 +6,9 @@ import path from "path";
 
 import express from "express";
 import session from "express-session";
-import pgSession from 'connect-pg-simple';
+import pgSession from "connect-pg-simple";
 
-import pool from "./src/models/index.js";
+import dbclient from "./src/models/index.js";
 const pgSessionStore = pgSession(session);
 
 // Middleware
@@ -20,12 +20,13 @@ import flashMessages from "./src/middleware/flash-messages.js";
 import { configureStaticPaths } from "./src/utils/index.js";
 import { fileURLToPath } from "url";
 import { testDatabase, setupDatabase } from "./src/models/index.js";
+import { notFoundHandler, globalErrorHandler } from './src/middleware/error-handler.js';
+
 
 /**
  * Global Variables
  */
 
-const secret = process.env.SECRET;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const mode = process.env.NODE_ENV;
@@ -39,22 +40,23 @@ const app = express();
 // instance the session token
 app.use(
   session({
-      store: new pgSessionStore({
-        pool: pool,
-        tableName: "session",
-      }),
-      name: "SessionID",
-      secret: secret,
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        sameSite: true,
-        secure: false, // Set to `true` in production with HTTPS
-        httpOnly: true, // Prevents client-side access to the cookie
-      },
-    })
-  );
+    store: new pgSessionStore({
+      pool: dbclient,
+      tableName: "sessions",
+      createTableIfMissing: true
+    }), 
+    secret: process.env.SESSION_SECRET || "default-secret",
+    resave: false,
+    saveUninitialized: true,
+    name: "sessionId",
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      sameSite: true,
+      secure: false, // Set to `true` in production with HTTPS
+      httpOnly: true, // Prevents client-side access to the cookie
+    },
+  })
+);
 
 // Configure the application based on environment settings
 app.use(configNodeEnv);
@@ -93,6 +95,9 @@ app.use("/", homeRoute);
  * Start the server
  */
 
+app.use(notFoundHandler);
+app.use(globalErrorHandler);
+
 // When in development mode, start a WebSocket server for live reloading
 if (mode.includes("dev")) {
   const ws = await import("ws");
@@ -112,6 +117,8 @@ if (mode.includes("dev")) {
     console.error("Failed to start WebSocket server:", error);
   }
 }
+
+
 
 // Start the Express server
 app.listen(port, async () => {

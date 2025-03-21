@@ -9,6 +9,8 @@
   --color-tertiary: #323834;
   --text-color: white;
   --text-color-secondary: black;
+  --error-color: red;
+  --success-color: green;
 }
 
 body {
@@ -126,4 +128,21 @@ body {
     background-color: var(--color-secondary);
     padding: 1rem;
   }
+}
+
+/* Styles for flash messaging for success and error messages */
+.success {
+  background-color: var(--color-tertiary);
+  color: var(--success-color);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.error {
+  background-color: var(--color-tertiary);
+  color: var(--error-color);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
