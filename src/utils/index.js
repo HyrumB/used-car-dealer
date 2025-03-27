@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import path from "path";
 
 /** @type {Array<{route: string, dir: string}|string>} Static path configurations */
@@ -32,6 +33,7 @@ const configureStaticPaths = (app) => {
         // Register the path directly
         app.use(pathConfig, express.static(pathConfig));
       } else {
+        getNav;
         // Register the path with the specified route and directory
         app.use(
           pathConfig.route,
@@ -50,7 +52,7 @@ const configureStaticPaths = (app) => {
  *
  * @returns {string} The navigation menu.
  */
-const getNav = () => {
+const getNav = (user) => {
   let nav = `
         <nav>
             <ul>
@@ -59,12 +61,18 @@ const getNav = () => {
                 <li><a href="/items/">Items</a></li>
                 <li><a href="/categories/">categories</a></li>`;
 
-  if (process.env.NODE_ENV.toLowerCase().includes("dev")) {
+  if (user) {
     nav += `
     <li><a href="/items/add">add listing</a></li>
     <li><a href="/items/edit">edit listing</a></li>
     <li><a href="/categories/add">add catagory</a></li>
-    <li><a href="/categories/edit">edit catagory</a></li>    
+    <li><a href="/categories/edit">edit catagory</a></li>  
+    <li><a href="/accounts/logout">logout</a></li>  
+    `;
+  } else {
+    nav += `
+    <li><a href="/accounts/login">login</a></li>
+    <li><a href="/accounts/register">sign-up</a></li>
     `;
   }
 

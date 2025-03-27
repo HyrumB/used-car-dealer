@@ -1,1 +1,20 @@
-<h1>this is the register page</h1>
+<h1>Register</h1>
+<form id="register-form" action="/accounts/register" method="POST">
+  <input id="username" type="text" name="username" placeholder="Username" />
+  <input id="email" type="email" name="email" placeholder="Email" required />
+  <input
+    id="password"
+    type="password"
+    name="password"
+    placeholder="Password"
+    required
+  />
+  <input
+    id="password2"
+    type="password"
+    name="confirm_password"
+    placeholder="Confirm Password"
+    required
+  />
+  <button type="submit">Register</button>
+</form>

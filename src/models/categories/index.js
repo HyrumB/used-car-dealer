@@ -12,4 +12,6 @@ const getCategories = async () => {
 
 
 
+
+
 export {addCategory, getCategories};

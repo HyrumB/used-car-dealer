@@ -1,17 +1,8 @@
-<h1>contact me through thi form</h1>
+<h1>contact me through this form</h1>
 
-<form action="/contact-us" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-    </div>
-    <button type="submit">Send</button>
+<form action="/contact-us" method="POST">
+  <input type="text" name="name" placeholder="Name" />
+  <input type="email" name="email" placeholder="Email" required />
+  <textarea name="message" placeholder="Message" required></textarea>
+  <button type="submit">submit</button>
 </form>

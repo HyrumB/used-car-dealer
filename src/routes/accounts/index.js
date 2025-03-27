@@ -1,20 +1,96 @@
-import { Router } from 'express';
-
-import dbClient from '../../models/index.js';
-import { requireAuth } from '../../utils/auth.js';
+import { Router } from "express";
+import { registerUser, checkUserExists } from "../../models/accounts/index.js";
+import { body, validationResult } from "express-validator";
+import dbClient from "../../models/index.js";
+import { requireAuth } from "../../utils/auth.js";
 
 const router = Router();
 
-router.get('/', requireAuth, async (req, res) => {
-    res.render('accounts/index', { title: 'account page' });
+//  validate info for registration
+const registrationValidation = [
+  body("email").isEmail().withMessage("Invalid email format."),
+  body("password")
+    .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)
+    .withMessage(
+      "Password must be at least 8 characters long, include one uppercase letter, one number, and one symbol."
+    ),
+];
+
+// register page route
+
+router.get("/register", async (req, res) => {
+  res.render("/accounts/register", { title: "registration page" });
 });
 
-router.get('/register', async (req, res) => {
-    res.render('accounts/register', { title: 'registration page' });
+router.post("/register", registrationValidation, async (req, res) => {
+  // Check if there are any validation errors
+  const results = validationResult(req);
+  if (results.errors.length > 0) {
+    results.errors.forEach((error) => {
+      req.flash("error", error.msg);
+    });
+    res.redirect("/accounts/register");
+    return;
+  }
+
+  // check if fields are empty
+  const { username, email, password, confirm_password } = req.body;
+  if (!username || !email || !password || !confirm_password) {
+    req.flash("error", "missing required fields.");
+    res.redirect("/accounts/register");
+  }
+
+  // check if user already exists
+  const user_email = await checkUserExists(email);
+  if (user_email.rows.length > 0) {
+    req.flash("error", "Email already in use.");
+    res.redirect("/accounts/register");
+  }
+
+  // check if passwords dont match
+  if (password !== confirm_password) {
+    req.flash("error", "Passwords do not match.");
+    res.redirect("/accounts/register");
+  }
+
+  // register user
+  else if (password === confirm_password) {
+    await registerUser(username, email, password);
+    req.flash("success", "User registered successfully.");
+    res.redirect("/accounts/login");
+  }
 });
 
-router.get('/login', async (req, res) => {
-    res.render('accounts/login', { title: 'login page' });
+// login page route
+
+router.get("/login", async (req, res) => {
+  res.render("/accounts/login", { title: "login page" });
+});
+
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await dbClient.query(
+    'SELECT * FROM "user" WHERE user_email = $1 AND user_password = $2',
+    [email, password]
+  );
+  if (user.rows.length > 0) {
+    req.session.user = user.rows[0];
+    req.session.user_id = user.rows[0].user_roles_id;
+    req.flash("success", "You are now logged in.");
+    res.redirect("/");
+  } else {
+    res.redirect("/accounts/login");
+  }
+});
+
+// account page route
+router.get("/", requireAuth, async (req, res) => {
+  res.render("accounts/index", { title: "account page" });
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/accounts/login");
 });
 
 export default router;
