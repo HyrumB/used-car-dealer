@@ -181,19 +181,19 @@ body {
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(250px, 1fr)
-    ); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Increased minmax width */
     gap: 20px; /* Space between grid items */
     padding: 20px; /* Padding around the grid */
+    max-width: calc(4 * (400px + 20px)); /* Updated max-width */
+    margin: 0 auto; /* Center the grid horizontally */
+    justify-content: space-around;
 
     a {
       text-decoration: none;
       color: var(--text-color);
     }
 
-    .card {
+    .grid-card {
       border: 1px solid var(--text-color);
       border-radius: 8px;
       overflow: hidden; /* Ensure image fits within the card */
