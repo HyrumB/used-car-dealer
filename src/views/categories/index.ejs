@@ -1,12 +1,14 @@
 <h1>categories</h1>
 
-<div class="categories-grid">
+<div class="grid">
     <% categories.forEach((category) => { %>
-        <a href="/categories/<%= category.category_slug %>" class="category-card-link">
-        <div class="category-card">
+        
+        <div class="grid-card">
+            <a href="/categories/category/<%= category.vehicle_category_id %>" class="category-card-link">
             <img src="<%= category.image_path %>" alt="<%= category.category_name %>">
             <h3><%= category.vehicle_category_name %></h3>
             <p><%= category.category_description %></p>
+            </a>
         </div>
     <% }); %>
 </div>

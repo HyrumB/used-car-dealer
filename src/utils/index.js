@@ -52,23 +52,38 @@ const configureStaticPaths = (app) => {
  *
  * @returns {string} The navigation menu.
  */
-const getNav = (user) => {
+const getNav = (user_role) => {
   let nav = `
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/contact-us">Contact Us</a></li>
-                <li><a href="/items/">Items</a></li>
                 <li><a href="/categories/">categories</a></li>`;
 
-  if (user) {
+  if (user_role == 1) {
     nav += `
-    <li><a href="/items/add">add listing</a></li>
-    <li><a href="/items/edit">edit listing</a></li>
-    <li><a href="/categories/add">add catagory</a></li>
-    <li><a href="/categories/edit">edit catagory</a></li>  
-    <li><a href="/accounts/logout">logout</a></li>  
+    <li><a href="/accounts/">account</a></li>
+    <li><a href="/accounts/logout">logout</a></li>
     `;
+  } else if (user_role == 2) {
+    nav += `
+        <li><a href="/accounts/">account</a></li>
+
+    <li><a href="/vehicle/add">add listing</a></li>
+    <li><a href="/vehicle/edit">edit listing</a></li>
+    <li><a href="/accounts/logout">logout</a></li>  
+
+    `;
+  } else if (user_role == 3) {
+    nav += `
+
+      <li><a href="/vehicle/add">add listing</a></li>
+      <li><a href="/vehicle/edit">edit listing</a></li>
+      <li><a href="/categories/add">add category</a></li>
+      <li><a href="/categories/edit">edit category</a></li> 
+      <li><a href="/accounts/">account</a></li>
+      <li><a href="/accounts/logout">logout</a></li>  
+      `;
   } else {
     nav += `
     <li><a href="/accounts/login">login</a></li>

@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { registerUser, checkUserExists } from "../../models/accounts/index.js";
+import { registerUser, checkUserExists, getUserById } from "../../models/accounts/index.js";
 import { body, validationResult } from "express-validator";
 import dbClient from "../../models/index.js";
 import { requireAuth } from "../../utils/auth.js";
+
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -69,14 +71,31 @@ router.get("/login", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   const user = await dbClient.query(
-    'SELECT * FROM "user" WHERE user_email = $1 AND user_password = $2',
-    [email, password]
+    'SELECT * FROM "user" WHERE user_email = $1',
+    [email]
   );
-  if (user.rows.length > 0) {
-    req.session.user = user.rows[0];
-    req.session.user_id = user.rows[0].user_roles_id;
-    req.flash("success", "You are now logged in.");
+
+  if (user.rows.length > 0 && (await bcrypt.compare(password, user.rows[0].user_password))) {
+
+    req.session.user      = user.rows[0].user_name;
+    req.session.user_role = user.rows[0].role_id;
+    req.session.user_id   = user.rows[0].user_id;
+
+    if (req.session.user_role == 3) {
+      req.session.admin = true;
+      req.flash("success", "welcome admin");
+    }
+
+    else if (req.session.user_role == 2) {
+      req.flash("success", "welcome trusted-user");
+    }
+
+    else {
+      req.flash("success", "You are now logged in.");
+    }
+
     res.redirect("/");
   } else {
     res.redirect("/accounts/login");
@@ -85,7 +104,8 @@ router.post("/login", async (req, res) => {
 
 // account page route
 router.get("/", requireAuth, async (req, res) => {
-  res.render("accounts/index", { title: "account page" });
+  const user_data = await getUserById(req.session.user_id);
+  res.render("accounts/index", { title: "account page", user: user_data });
 });
 
 router.get("/logout", (req, res) => {

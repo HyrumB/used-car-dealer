@@ -3,6 +3,7 @@
 *:after {
   box-sizing: border-box;
 }
+
 :root {
   --color-primary: darkslategray;
   --color-secondary: #3d2a2a;
@@ -42,6 +43,7 @@ body {
     background-color: var(--color-secondary);
     color: var(--text-color);
     padding: 1rem;
+
     .logo {
       display: flex;
       align-items: center;
@@ -68,16 +70,51 @@ body {
             text-decoration: underline;
             background-color: var(--color-primary);
           }
-        }
 
-        a {
-          color: #fff;
-          text-decoration: none;
-          vertical-align: middle;
+          a {
+            color: #fff;
+            text-decoration: none;
+            vertical-align: middle;
 
-          &:hover {
-            text-decoration: underline;
+            &:hover {
+              text-decoration: underline;
+            }
           }
+        }
+      }
+    }
+  }
+  .user-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* Increased min-height for more vertical space */
+  
+    .user-info-box {
+      background-color: var(--color-tertiary);
+      border: 1px solid var(--color-secondary);
+      border-radius: 12px; /* Slightly larger border-radius */
+      padding: 30px; /* Increased padding for more internal space */
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15); /* Slightly larger and darker shadow */
+      text-align: center;
+      width: 400px; /* Added a fixed width to make it more substantial */
+      max-width: 90%; /* Ensure it doesn't overflow on smaller screens */
+  
+      p {
+        margin-bottom: 15px; /* Increased margin between paragraphs */
+        font-size: 1.1rem; /* Increased base font size */
+        color: var(--text-color);
+  
+        #user_name {
+          font-weight: bold;
+          font-size: 1.3rem; /* Increased username font size */
+          margin-bottom: 20px; /* More space after the username */
+        }
+  
+        #user_id,
+        #user_email,
+        #user_role {
+          font-size: 1.05rem; /* Slightly increased size for other info */
         }
       }
     }
@@ -102,10 +139,7 @@ body {
 
     input[type="email"],
     input[type="password"],
-    input[type="text"] 
-    {
-      
-
+    input[type="text"] {
       padding: 10px;
       border: none;
       border-radius: 4px;
@@ -145,7 +179,7 @@ body {
     }
   }
 
-  .categories-grid {
+  .grid {
     display: grid;
     grid-template-columns: repeat(
       auto-fit,
@@ -157,11 +191,10 @@ body {
     a {
       text-decoration: none;
       color: var(--text-color);
-      
-    }    
+    }
 
-    .category-card {
-      border: 1px solid #ddd;
+    .card {
+      border: 1px solid var(--text-color);
       border-radius: 8px;
       overflow: hidden; /* Ensure image fits within the card */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -199,6 +232,7 @@ body {
 
   footer {
     background-color: var(--color-secondary);
+    text-decoration: none;
     padding: 1rem;
     text-align: center; /* Center footer content */
   }
