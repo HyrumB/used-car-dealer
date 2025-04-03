@@ -4,9 +4,9 @@
     <% categories.forEach((category) => { %>
         
         <div class="grid-card">
-            <a href="/categories/category/<%= category.vehicle_category_id %>" class="category-card-link">
+            <a href="/categories/category/<%= category.category_id %>" class="category-card-link">
             <img src="<%= category.image_path %>" alt="<%= category.category_name %>">
-            <h3><%= category.vehicle_category_name %></h3>
+            <h3><%= category.category_name %></h3>
             <p><%= category.category_description %></p>
             </a>
         </div>

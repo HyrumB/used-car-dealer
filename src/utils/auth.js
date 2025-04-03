@@ -1,6 +1,5 @@
 const requireAuth = (req, res, next) => {
     if (!req.session.user) {
-        console.log('User is not logged in');
         req.flash('error', 'You must be logged in to view this page.');
         return res.redirect('/accounts/login');
     } else {
@@ -11,12 +10,10 @@ const requireAuth = (req, res, next) => {
 
 const requireAuthTrusted = (req, res, next) => {
     if (!req.session.user) {
-        console.log('User is not logged in');
         req.flash('error', 'You must be logged in to view this page.');
         return res.redirect('/accounts/login');
 
-    } else if (req.session.user_role != 2 || req.session.user_role != 3) {
-        console.log('User is not a trusted user');
+    } else if (!(req.session.user_role == 2 || req.session.user_role == 3)) {
         req.flash('error', 'You not allowed to view this page.');
         return res.redirect('/accounts/login');
 
@@ -28,12 +25,10 @@ const requireAuthTrusted = (req, res, next) => {
 
 const requireAuthAdmin = (req, res, next) => {
     if (!req.session.user) {
-        console.log('User is not logged in');
         req.flash('error', 'You must be logged in to view this page.');
         return res.redirect('/accounts/login');
 
     } else if (req.session.user_role != 3) {
-        console.log('User is not an admin');
         req.flash('error', 'You not allowed to view this page.');
         return res.redirect('/accounts/login');
     } else {

@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import express from "express";
 import session from "express-session";
 import path from "path";
@@ -43,9 +45,14 @@ const configureStaticPaths = (app) => {
     }
   });
 
+
+
   // Update the app settings with the newly registered paths
   app.set("staticPaths", Array.from(registeredPaths));
 };
+
+
+
 
 /**
  * Returns the navigation menu.
@@ -77,10 +84,10 @@ const getNav = (user_role) => {
   } else if (user_role == 3) {
     nav += `
 
+      <li><a href="/categories/add">add category</a></li>
+      <li><a href="/categories/edit">edit category</a></li>
       <li><a href="/vehicle/add">add listing</a></li>
       <li><a href="/vehicle/edit">edit listing</a></li>
-      <li><a href="/categories/add">add category</a></li>
-      <li><a href="/categories/edit">edit category</a></li> 
       <li><a href="/accounts/">account</a></li>
       <li><a href="/accounts/logout">logout</a></li>  
       `;
@@ -100,4 +107,30 @@ const getNav = (user_role) => {
   return nav;
 };
 
-export { configureStaticPaths, getNav };
+
+
+const getVerifiedImage = (images = []) => {
+  // Exit early if no valid images array provided
+  if (!images || images.length === 0) {
+      return '';
+  }
+
+  // Process first image (assuming single image upload)
+  const image = images[0];
+  const imagePath = path.join(process.cwd(), `public/images/vehicles/${image.newFilename}`);
+  
+  // Move uploaded file from temp location to permanent storage
+  fs.renameSync(image.filepath, imagePath);
+
+  // Cleanup by removing any remaining temporary files
+  images.forEach(image => {
+      if (fs.existsSync(image.filepath)) {
+          fs.unlinkSync(image.filepath);
+      }
+  });
+
+  // Return the new frontend image path for storage in the database
+  return `/images/vehicles/${image.newFilename}`;
+};
+
+export { getVerifiedImage, configureStaticPaths, getNav };

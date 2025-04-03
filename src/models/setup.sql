@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS category (
-    vehicle_category_id SERIAL PRIMARY KEY,
-    vehicle_category_name TEXT UNIQUE NOT NULL,
+    category_id SERIAL PRIMARY KEY,
+    category_name TEXT UNIQUE NOT NULL,
     category_description TEXT NOT NULL,
     image_path TEXT NOT NULL
 );
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS vehicles (
     vehicle_id SERIAL PRIMARY KEY,
     vehicle_name TEXT NOT NULL,
     vehicle_description TEXT NOT NULL,
-    vehicle_image TEXT UNIQUE NOT NULL,
+    image_path TEXT UNIQUE NOT NULL,
     vehicle_price REAL NOT NULL,
     vehicle_owner_id INTEGER NOT NULL,
-    vehicle_category_id INTEGER NOT NULL,
-    FOREIGN KEY (vehicle_category_id) REFERENCES category(vehicle_category_id),
+    category_id INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(category_id),
     FOREIGN KEY (vehicle_owner_id) REFERENCES "user"(user_id)
 );
 
@@ -42,11 +42,11 @@ create table if not exists messages (
 -- add data --
 
 -- Inserting into the "category" table
-INSERT INTO category (vehicle_category_name, category_description, image_path) VALUES
+INSERT INTO category (category_name, category_description, image_path) VALUES
 ('Trucks', 'Heavy-duty vehicles for hauling and towing.', '/images/vehicles/evolve-truck.avif'),
 ('Vans', 'Multi-purpose vehicles for passengers or cargo.', '/images/vehicles/survan-tn.jpg'),
-('mobile Suits', 'fast, mobile machines built for war.', '/images/vehicles/.jpg')
-ON CONFLICT (vehicle_category_name) DO NOTHING;
+('mobile Suits', 'fast, mobile machines built for war.', '/images/vehicles/zaku-II.jpg')
+ON CONFLICT (category_name) DO NOTHING;
 
 -- Inserting into the "user_roles" table
 INSERT INTO user_roles (role_name) VALUES 
@@ -63,10 +63,10 @@ INSERT INTO "user" (user_name, user_email, user_password, role_id) VALUES
 ON CONFLICT (user_name) DO NOTHING;
 
 -- Inserting into the "vehicles" table 
-INSERT INTO vehicles (vehicle_name, vehicle_description, vehicle_image, vehicle_price, vehicle_owner_id, vehicle_category_id) VALUES
+INSERT INTO vehicles (vehicle_name, vehicle_description, image_path, vehicle_price, vehicle_owner_id, category_id) VALUES
 ('Ford F-150', 'Popular and powerful pickup truck', '/images/f150.jpg', 45000.75, 1, 1), 
-('zaku 01', 'the first mobile suit ever put to mass production', '/images/zaku-01.jpg', 45000.75, 1, 3), 
-('zaku 02', 'the 2nd gen zaku made to counter the federations own white-devil', '/images/zaku-02.jpg', 45000.75, 1, 3), 
-('Ford F-150', 'Popular and powerful pickup truck', '/images/f150.jpg', 45000.75, 1, 1), 
-('Honda Odyssey', 'Comfortable minivan for families', '/images/odyssey.jpg', 38000.00, 2, 2) 
-ON CONFLICT (vehicle_image) DO NOTHING;
+('zaku 01', 'the first mobile suit ever put to mass production', '/images/vehicles/Zaku_I_.webp', 45000.75, 1, 3), 
+('zaku 02', 'the 2nd gen zaku made to counter the federations own white-devil', '/images/vehicles/zaku-II.jpg', 45000.75, 1, 3), 
+('Ford F-150', 'Popular and powerful pickup truck', '/images/vehicles/f150.jpg', 45000.75, 1, 1), 
+('Honda Odyssey', 'Comfortable minivan for families', '/images/vehicles/odyssey.jpg', 38000.00, 2, 2) 
+ON CONFLICT (image_path) DO NOTHING;

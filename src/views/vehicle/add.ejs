@@ -1,1 +1,19 @@
 <h1>this is the add listing page</h1>
+
+<form action="/vehicle/add" method="POST" enctype="multipart/form-data">
+    <input type="text" name="vehicle_name" placeholder="vehicle name"></input>
+    <input type="text" name="description" placeholder = "vehicle description"></input>
+    <input type="input" name="price" placeholder = "price"></input>
+    <input type="file" name="image_path" placeholder = "image path"></input>
+
+    <div>
+        <select id="category_id" name="category_id" required>
+            <option value="" disabled selected>Select category</option>
+            <% categories.forEach((category) => { %>
+                <option value="<%= category.category_id %>"><%= category.category_name %></option>
+            <% }); %>
+        </select>   
+    </div>
+    
+    <button type="submit">submit</button>
+</form>
