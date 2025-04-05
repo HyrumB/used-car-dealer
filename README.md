@@ -1,6 +1,12 @@
+
+## site location
+
+site can be found on [render.com](https://james-auto-dealer.onrender.com/categories/)
+
 ## Getting Started
 
 This document is intended to get you started quickly in building a backend driven Node.js application complete with pages and content, backend logic and a PostgreSQL database for data storage.
+
 ## Prerequisites
 
 The only prerequisite software required to have installed at this point is Git for version control and a code editor - we will use VS Code (VSC).
@@ -8,7 +14,7 @@ The only prerequisite software required to have installed at this point is Git f
 ## Package Management
 
 The foundation of the project development software is Node. While functional, Node depends on "packages" to add functionality to accomplish common tasks. This requires a package manager. Three common managers are NPM (Node Package Manager), YARN, and PNPM. While all do the same thing, they do it slightly differently. We will use PNPM for two reasons: 1) All packages are stored on your computer only once and then symlinks (system links) are created from the package to the project as needed, 2) performance is increased meaning that when the project builds, it does so faster.
-You will need to either install or activate PNPM before using it. See https://pnpm.io/
+You will need to either install or activate PNPM before using it. See <https://pnpm.io/>
 
 ## Install the Project Dependencies
 
@@ -23,6 +29,7 @@ You will need to either install or activate PNPM before using it. See https://pn
 ## Start the Express Server
 
 With the packages installed you're ready to run the initial test.
+
 1. If the VSC terminal is still open use it. If it is closed, open it again using the same command as before.
 2. Type the following command, then press Enter:
 
@@ -39,9 +46,11 @@ With the packages installed you're ready to run the initial test.
 ## Move the demo file
 
 When you installed Git and cloned the remote repository in week 1, you should have created a simple web page.
+
 1. Find and move that simple web page to the public folder. Be sure to note its name.
+
 ## Test in a browser
 
-1. Go to http://localhost:5500 in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
+1. Go to <http://localhost:5500> in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
 2. Add "/filename.html" to the end of the URL (replacing filename with the name of the file you moved to the public folder).
 3. You should see that page in the browser.
