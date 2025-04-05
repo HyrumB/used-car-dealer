@@ -5,9 +5,9 @@
 }
 
 :root {
-  --color-primary: darkslategray;
+  --color-primary: #1b3622;
   --color-secondary: #3d2a2a;
-  --color-tertiary: #323834;
+  --color-tertiary: #216131;
   --text-color: white;
   --text-color-secondary: black;
   --error-color: red;
@@ -30,6 +30,7 @@ body {
   main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
     text-decoration: none;
     padding: 20px; /* Add some padding around the main content */
@@ -72,7 +73,7 @@ body {
           }
 
           a {
-            color: #fff;
+            color: var(--text-color);
             text-decoration: none;
             vertical-align: middle;
 
@@ -84,12 +85,13 @@ body {
       }
     }
   }
+
   .user-info-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 300px; /* Increased min-height for more vertical space */
-  
+
     .user-info-box {
       background-color: var(--color-tertiary);
       border: 1px solid var(--color-secondary);
@@ -99,18 +101,18 @@ body {
       text-align: center;
       width: 400px; /* Added a fixed width to make it more substantial */
       max-width: 90%; /* Ensure it doesn't overflow on smaller screens */
-  
+
       p {
         margin-bottom: 15px; /* Increased margin between paragraphs */
         font-size: 1.1rem; /* Increased base font size */
         color: var(--text-color);
-  
+
         #user_name {
           font-weight: bold;
           font-size: 1.3rem; /* Increased username font size */
           margin-bottom: 20px; /* More space after the username */
         }
-  
+
         #user_id,
         #user_email,
         #user_role {
@@ -120,13 +122,62 @@ body {
     }
   }
 
-  /* CSS for the Login page */
   h1 {
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  h2{
     color: var(--text-color);
     text-align: center;
     margin-bottom: 20px;
   }
 
+  /* CSS for the home page */
+  #welcome {
+    text-align: center; /* Center the content within the welcome div */
+    padding: 20px; /* Add some padding around the content */
+    background-color: var(--color-secondary);
+    width: 20%;
+    border-radius: 15px;
+    margin: 0 auto;
+
+    p {
+      margin-bottom: 15px; /* Add spacing below each paragraph */
+    }
+
+    #direct_buttons {
+      display: flex;
+      justify-content: center; /* Center buttons horizontally */
+      align-items: center;
+      gap: 10px; /* Space between buttons and "or" */
+      margin-bottom: 15px; /* Add spacing below the button groups */
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      outline-style: solid;
+      outline-color: var(--color-tertiary);
+      background-color: var(--color-secondary);
+      color: var(--text-color);
+      text-decoration: none;
+
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease; 
+
+      &:hover {
+        background-color: var(--color-secondary); 
+      }
+    }
+  }
+
+  /* CSS for the Login page */
+
+  /* CSS for the forms */
   form {
     background-color: var(--color-tertiary);
     padding: 20px;
@@ -179,9 +230,120 @@ body {
     }
   }
 
+  /* CSS for the edit page */
+
+  #edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    #category-select {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box; /* Ensure padding doesn't affect width */
+      }
+    }
+
+    #edit-inputs {
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid var(--text-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        resize: vertical; /* Allow vertical resizing of the textarea */
+      }
+
+      input[type="file"] {
+        margin-bottom: 15px;
+      }
+
+      button[type="submit"] {
+        background-color: var(--color-secondary); /* Example primary color */
+        color: var(--text-color);
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+
+        &:hover {
+          background-color: var(
+            --color-primary
+          ); /* Darker shade for hover effect */
+        }
+      }
+    }
+  }
+
+  /* CSS for the Listing page */
+
+  #listing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    margin: 20px;
+
+    #title {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    #image {
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    #price,
+    #owner {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--text-color);
+    }
+
+    #description {
+      line-height: 1.6;
+      color: var(--text-color);
+      margin-bottom: 25px;
+    }
+  }
+
+  /* CSS for the Categories grids */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Increased minmax width */
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(300px, 1fr)
+    ); /* Increased minmax width */
     gap: 20px; /* Space between grid items */
     padding: 20px; /* Padding around the grid */
     max-width: calc(4 * (400px + 20px)); /* Updated max-width */
@@ -210,7 +372,7 @@ body {
       img {
         width: 100%;
         height: 200px; /* Fixed height for images, adjust as needed */
-        object-fit: cover; /* Maintain aspect ratio and cover the area */
+        object-fit: contain; /* Maintain aspect ratio and cover the area */
       }
 
       h3 {

@@ -1,10 +1,14 @@
 
-<h1><%= vehicle.vehicle_name %></h1>
+<div id ="listing-container">
 
-<img src=" <%= vehicle.image_path %> || 'https://placehold.co/300x200/png" alt= "photo of <%= vehicle.vehicle_name %> ">
+<h1 id ="title"><%= vehicle.vehicle_name %></h1>
+
+<img id="image" src=" <%= vehicle.image_path %> " alt= "photo of <%= vehicle.vehicle_name %> ">
 
 
-<p> price: <%= vehicle.vehicle_price %></p>
-<p> vehicle owner: <%= vehicle.vehicle_owner %></p>
+<p id="price"> price: $<%= vehicle.vehicle_price %></p>
+<p id="owner"> vehicle owner: <%= user_name %></p>
 
-<p><%= vehicle.vehicle_description %></p>
+<p id="description"><%= vehicle.vehicle_description %></p>
+
+</div>

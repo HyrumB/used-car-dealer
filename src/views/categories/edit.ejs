@@ -1,0 +1,37 @@
+<h1>Edit Category</h1>
+
+
+<div id ="edit_container">
+    <form id ="edit_form" action="/categories/edit/" method="POST" enctype="multipart/form_data">
+
+        <div id="category_select">
+            <label for="category_id">Select category:</label>
+            <select id="category_id" name="category_id" required>
+                <option value="" disabled selected>Select category</option>
+                <% categories.forEach((category) => { %>
+                    <option value="<%= category.category_id %>" data_name="<%= category.category_name %>" data_description="<%= category.category_description %>"><%= category.category_name %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <div id ="edit_inputs" style="display: none;">
+            <label for="category_name">Category Name:</label>
+            <input type="text" id="category_name_input" name="category_name" value=""></input><br><br>
+
+            <label for="description">Description:</label>
+            <textarea id="description_input" name="description"></textarea><br><br>
+
+            <label for="image_path">Image:</label>
+            <input type="file" name="image_path" placeholder="image path"></input><br><br>
+
+            <button type="submit">Update Category</button>
+
+        </div>
+
+    </form>
+
+    <form  id ="delete_form" action="/categories/delete/" method="POST" >
+        <input id="delete_category_id" type="hidden" name="category_id"></input>
+        <button id ="delete_button" type="submit" style="display: none;">Delete Catagory</button>
+    </form>
+</div>

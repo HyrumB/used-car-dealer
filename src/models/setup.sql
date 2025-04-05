@@ -65,8 +65,8 @@ ON CONFLICT (user_name) DO NOTHING;
 -- Inserting into the "vehicles" table 
 INSERT INTO vehicles (vehicle_name, vehicle_description, image_path, vehicle_price, vehicle_owner_id, category_id) VALUES
 ('Ford F-150', 'Popular and powerful pickup truck', '/images/f150.jpg', 45000.75, 1, 1), 
-('zaku 01', 'the first mobile suit ever put to mass production', '/images/vehicles/Zaku_I_.webp', 45000.75, 1, 3), 
-('zaku 02', 'the 2nd gen zaku made to counter the federations own white-devil', '/images/vehicles/zaku-II.jpg', 45000.75, 1, 3), 
-('Ford F-150', 'Popular and powerful pickup truck', '/images/vehicles/f150.jpg', 45000.75, 1, 1), 
-('Honda Odyssey', 'Comfortable minivan for families', '/images/vehicles/odyssey.jpg', 38000.00, 2, 2) 
+('zaku 01', 'the first mobile suit ever put to mass production', '/images/vehicles/Zaku_I_.webp', 45000.75, 2, 3), 
+('zaku 02', 'the 2nd gen zaku made to counter the federations own white-devil', '/images/vehicles/zaku-II.jpg', 45000.75, 2, 3), 
+('Ford F-150', 'Popular and powerful pickup truck', '/images/vehicles/f150.jpg', 45000.75, 3, 1), 
+('Honda Odyssey', 'Comfortable minivan for families', '/images/vehicles/odyssey.jpg', 38000.00, 1, 2) 
 ON CONFLICT (image_path) DO NOTHING;
