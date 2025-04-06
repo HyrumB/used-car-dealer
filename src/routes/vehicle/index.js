@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  getVehicleContent,  addVehicle,  getVehiclesByUser,  getAllVehicles,} from "../../models/vehicle/index.js";
+import {  getVehicleContent,  addVehicle,  getVehiclesByUser,  getAllVehicles, deleteVehicleById, editVehicle} from "../../models/vehicle/index.js";
 import { requireAuthTrusted, requireAuthAdmin } from "../../utils/auth.js";
 import { getCategories } from "../../models/categories/index.js";
 import { getVerifiedImage } from "../../utils/index.js";
@@ -24,15 +24,15 @@ router.get("/edit-grid-admin/", requireAuthAdmin, async (req, res) => {
 
 router.get("/edit/:id", requireAuthTrusted, async (req, res) => {
   const dbResponse = await getVehicleContent(req.params.id);
+  const categories = await getCategories();
+
 
   // stop user from editing someone else's vehicle, unless they are admin
-
-
   if (req.session.user_role == 3) {
-    res.render("vehicle/edit", { title: "edit page", vehicle: dbResponse });
+    res.render("vehicle/edit", { title: "edit page", vehicle: dbResponse, categories: categories });
 
   } else if (dbResponse.vehicle_owner_id == req.session.user_id) {
-    res.render("vehicle/edit", { title: "edit page", vehicle: dbResponse });
+    res.render("vehicle/edit", { title: "edit page", vehicle: dbResponse, categories: categories });
 
   } else {
     req.flash("error", "You do not have permission to edit this vehicle");
@@ -42,49 +42,52 @@ router.get("/edit/:id", requireAuthTrusted, async (req, res) => {
 });
 
 router.post("/edit/:id", requireAuthTrusted, async (req, res) => {
-  const {
-    vehicle_id,
-    vehicle_name,
-    description,
-    image_path,
-    price,
-    category_id,
-  } = req.body;
+  const { vehicle_name, description,  price, image_path, category_id } = req.body;
+  const vehicle_id = req.params.id;
+
+
   const new_image_path = getVerifiedImage(req.files?.image_path);
 
+  // check for empty fields
   if (!vehicle_id || !vehicle_name || !description || !price) {
     req.flash("error", "Missing required fields.");
-    res.redirect("/vehicle/edit-grid");
+    res.redirect("/vehicle/edit/" + vehicle_id);
     return;
   }
 
   var result;
 
-  if (new_image_path) {
-    result = await editVehicle(
-      vehicle_id,
-      vehicle_name,
-      description,
-      new_image_path,
-      price,
-      category_id
+  // check if there is a new image path
+  if (new_image_path === undefined || new_image_path === null) {
+    result = await editVehicle(vehicle_id, vehicle_name, description, new_image_path, price, category_id
     );
   } else {
-    result = await editVehicle(
-      vehicle_id,
-      vehicle_name,
-      description,
-      image_path,
-      price,
-      category_id
-    );
+    result = await editVehicle( vehicle_id, vehicle_name, description, image_path, price, category_id);
   }
-
-  // If the category was added successfully, redirect to the new category
+  console.log(result);
+  // If the category was added successfully, redirect
   if (result.rowCount === 1) {
-    res.redirect(`/vehicle/${vehicle_id}`);
+    res.redirect(`/vehicle/edit-grid`);
     return;
   }
+  res.redirect("/vehicle/edit/" + vehicle_id);
+});
+
+router.post("/delete/:id", requireAuthTrusted, async (req, res) => {
+  if (req.session.user_role == 3) {
+    const dbResponse = await deleteVehicleById(req.params.id);
+    res.redirect("/vehicle/edit-grid-admin");
+
+  } else if (dbResponse.vehicle_owner_id == req.session.user_id) {
+    const dbResponse = await deleteVehicleById(req.params.id);
+    res.redirect("/vehicle/edit-grid");
+
+  } else {
+    req.flash("error", "You do not have permission to delete this vehicle");
+    res.redirect("/vehicle/edit-grid");
+    return;
+  }
+ 
 });
 
 router.get("/add", requireAuthTrusted, async (req, res) => {
@@ -96,7 +99,6 @@ router.get("/add", requireAuthTrusted, async (req, res) => {
 
 router.post("/add", requireAuthTrusted, async (req, res) => {
   const { vehicle_name, description, price, category_id } = req.body;
-  console.log(req.files);
   const image_path = getVerifiedImage(req.files?.image_path);
 
   // check for empty fields

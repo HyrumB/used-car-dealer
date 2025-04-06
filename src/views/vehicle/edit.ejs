@@ -1,9 +1,23 @@
 <h1>this is the edit listing page</h1>
 
-<form action="/vehicle/edit/:id" method="POST" enctype="multipart/form-data">
+<form action="/vehicle/edit/<%= vehicle.vehicle_id %>" method="POST" enctype="multipart/form-data">
+    <div id="category_select">
+        <label for="category_id">Select category:</label>
+        <select id="category_id" name="category_id" required>
+            <option value="" disabled selected>Select category</option>
+            <% categories.forEach((category) => { %>
+                <option value="<%= category.category_id %>" data_name="<%= category.category_name %>" data_description="<%= category.category_description %>"><%= category.category_name %></option>
+            <% }); %>
+        </select>
+    </div>
     <input type="text" name="vehicle_name" placeholder="vehicle name" value="<%= vehicle.vehicle_name %> "></input>
     <input type="text" name="description" placeholder = "vehicle description" value="<%= vehicle.vehicle_description %> "></input>
     <input type="input" name="price" placeholder = "price" value="<%= vehicle.vehicle_price %> "></input>
-    <input type="file" name="image_path" placeholder = "image path""></input>
+    <input type="file" name="image_path" placeholder = "image path" ></input>
+    
+
     <button type="submit">submit</button>
+</form>
+<form action="/vehicle/delete/<%= vehicle.vehicle_id %>" method="POST">
+    <button type="submit">delete</button>
 </form>

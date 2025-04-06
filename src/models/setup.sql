@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS category (
     category_id SERIAL PRIMARY KEY,
     category_name TEXT UNIQUE NOT NULL,
     category_description TEXT NOT NULL,
-    image_path TEXT NOT NULL
+    image_path TEXT
 );
 
 CREATE TABLE IF NOT EXISTS user_roles (
@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS "user" (
 
 CREATE TABLE IF NOT EXISTS vehicles (
     vehicle_id SERIAL PRIMARY KEY,
-    vehicle_name TEXT NOT NULL,
+    vehicle_name TEXT UNIQUE NOT NULL,
     vehicle_description TEXT NOT NULL,
-    image_path TEXT UNIQUE NOT NULL,
+    image_path TEXT,
     vehicle_price REAL NOT NULL,
     vehicle_owner_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
@@ -67,6 +67,6 @@ INSERT INTO vehicles (vehicle_name, vehicle_description, image_path, vehicle_pri
 ('Ford F-150', 'Popular and powerful pickup truck', '/images/vehicles/2024_f150.jpg', 45000.75, 1, 1), 
 ('zaku 01', 'the first mobile suit ever put to mass production', '/images/vehicles/Zaku_I_.webp', 45000.75, 2, 3), 
 ('zaku 02', 'the 2nd gen zaku made to counter the federations own white-devil', '/images/vehicles/zaku-II.jpg', 45000.75, 2, 3), 
-('Ford F-150', 'Popular and powerful pickup truck', '/images/vehicles/f150.avif', 45000.75, 3, 1), 
+('Ford F-150 2024', 'Popular and powerful pickup truck', '/images/vehicles/f150.avif', 45000.75, 3, 1), 
 ('Honda Odyssey', 'Comfortable minivan for families', '/images/vehicles/odyssey.avif', 38000.00, 1, 2) 
-ON CONFLICT (image_path) DO NOTHING;
+ON CONFLICT (vehicle_name) DO NOTHING;

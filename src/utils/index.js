@@ -85,7 +85,7 @@ const getNav = (user_role) => {
     nav += `
 
       <li><a href="/categories/add">add category</a></li>
-      <li><a href="/categories/edit-grid">edit category</a></li>
+      <li><a href="/categories/edit">edit category</a></li>
       <li><a href="/vehicle/add">add listing</a></li>
       <li><a href="/vehicle/edit-grid">edit listing</a></li>
       <li><a href="/vehicle/edit-grid-admin">edit listing admin</a></li>

@@ -7,11 +7,20 @@ const editCategory = async (
   image_path
 ) => {
   try {
-    const dbresponse = await dbClient.query(
-      "UPDATE category SET category_name = $1, category_description = $2, image_path = $3 WHERE category_id = $4",
-      [category_name, category_description, image_path, category_id]
-    );
-    return dbresponse;
+    if (image_path !== undefined && image_path !== null) {
+      const dbresponse = await dbClient.query(
+        "UPDATE category SET category_name = $1, category_description = $2, image_path = $3 WHERE category_id = $4",
+        [category_name, category_description, image_path, category_id]
+      );
+      return dbresponse;
+
+    }else {
+      const dbresponse = await dbClient.query(
+        "UPDATE category SET category_name = $1, category_description = $2 WHERE category_id = $3",
+        [category_name, category_description, category_id]
+      );
+      return dbresponse;
+    }
   } catch (error) {
     console.log(error);
   }
