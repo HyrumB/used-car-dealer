@@ -40,4 +40,25 @@ async function getVehicleContent(id) {
   return dbresponse.rows[0];
 }
 
-export { getVehicleContent, addVehicle };
+const getVehiclesByUser = async (user_id) => {
+  try {
+    let dbresponse = await dbClient.query(
+      "SELECT * FROM vehicles WHERE vehicle_owner_id = $1",
+      [user_id]
+    );
+    return dbresponse.rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const getAllVehicles = async () => {
+  try {
+    let dbresponse = await dbClient.query("SELECT * FROM vehicles");
+    return dbresponse.rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { getVehicleContent, addVehicle, getVehiclesByUser, getAllVehicles };

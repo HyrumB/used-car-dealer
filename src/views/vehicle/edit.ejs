@@ -1,1 +1,9 @@
 <h1>this is the edit listing page</h1>
+
+<form action="/vehicle/edit/:id" method="POST" enctype="multipart/form-data">
+    <input type="text" name="vehicle_name" placeholder="vehicle name" value="<%= vehicle.vehicle_name %> "></input>
+    <input type="text" name="description" placeholder = "vehicle description" value="<%= vehicle.vehicle_description %> "></input>
+    <input type="input" name="price" placeholder = "price" value="<%= vehicle.vehicle_price %> "></input>
+    <input type="file" name="image_path" placeholder = "image path""></input>
+    <button type="submit">submit</button>
+</form>

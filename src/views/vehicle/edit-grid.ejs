@@ -1,0 +1,16 @@
+
+<h1>edit listings by you</h1>
+
+<div class="grid">
+
+    <% vehicles.forEach((vehicle) => { %>
+        <div class="grid-card">
+            <a href="/vehicle/edit/<%= vehicle.vehicle_id %>" class="vehicle-card-link">
+                <img src="<%= vehicle.image_path %>" alt="<%= vehicle.vehicle_name %>">
+                <h3><%= vehicle.vehicle_name %></h3>
+                <p><%= vehicle.vehicle_description %></p>
+            </a>
+        </div>
+    <% }); %>   
+
+</div>
